@@ -26,7 +26,7 @@ public class Etudiant implements Serializable{
     @ManyToOne
     @JsonIgnore
     private Departement departement;
-  //  @ManyToMany(cascade =CascadeType.ALL)
+
     @ManyToMany(mappedBy="etudiants")
 
     @JsonIgnore
@@ -57,11 +57,11 @@ public class Etudiant implements Serializable{
     }
 
     public Set<Contrat> getContrats() {
-        return Contrats;
+        return contrats;
     }
 
     public void setContrats(Set<Contrat> contrats) {
-        Contrats = contrats;
+        contrats = contrats;
     }
 
     public Departement getDepartement() {
