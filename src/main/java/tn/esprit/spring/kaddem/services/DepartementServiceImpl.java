@@ -21,8 +21,7 @@ public class DepartementServiceImpl implements IDepartementService{
 		return (List<Departement>) departementRepository.findAll();
 	}
 
-	@PostMapping("/departements")
-public DepartementDTO addDepartement(@RequestBody DepartementDTO departementDTO) {
+public DepartementDTO addDepartement( DepartementDTO departementDTO) {
     Departement departement = new Departement();
     departement.setNomDepart(departementDTO.getNomDepart());
 
@@ -36,7 +35,7 @@ public DepartementDTO addDepartement(@RequestBody DepartementDTO departementDTO)
 }
 
 
-	public DepartementDTO updateDepartement(@RequestBody DepartementDTO departementDTO) {
+	public DepartementDTO updateDepartement( DepartementDTO departementDTO) {
     Departement departementToUpdate = departementRepository.findById(departementDTO.getIdDepart())
             .orElseThrow(() -> new EntityNotFoundException("Departement not found with ID: " + departementDTO.getIdDepart()));
 
