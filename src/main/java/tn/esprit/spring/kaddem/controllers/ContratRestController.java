@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.spring.kaddem.dto.ContratDTO;
 import tn.esprit.spring.kaddem.entities.Contrat;
 import tn.esprit.spring.kaddem.services.IContratService;
 
@@ -14,22 +15,55 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/contrat")
 public class ContratRestController {
+
 	IContratService contratService;
 
-	@GetMapping("/retrieve-all-contrats")
-public List<Contrat> getContrats() {
-    return contratService.retrieveAllContrats();
-}
 
+	@PostMapping("/add-contrat")
+	public ContratDTO addContrat(@RequestBody ContratDTO contratDTO) {
+		Contrat contrat = convertToContrat(contratDTO);
+		contrat = contratService.addContrat(contrat);
+		return convertToContratDTO(contrat);
+	}
+
+	private Contrat convertToContrat(ContratDTO contratDTO) {
+		Contrat contrat = new Contrat();
+		contrat.setIdContrat(contratDTO.getIdContrat());
+		contrat.setDateDebutContrat(contratDTO.getDateDebutContrat());
+		contrat.setDateFinContrat(contratDTO.getDateFinContrat());
+		contrat.setSpecialite(contratDTO.getSpecialite());
+		contrat.setArchive(contratDTO.getArchive());
+		contrat.setMontantContrat(contratDTO.getMontantContrat());
+
+
+		return contrat;
+	}
+
+	private ContratDTO convertToContratDTO(Contrat contrat) {
+		ContratDTO contratDTO = new ContratDTO();
+		contratDTO.setIdContrat(contrat.getIdContrat());
+		contratDTO.setDateDebutContrat(contrat.getDateDebutContrat());
+		contratDTO.setDateFinContrat(contrat.getDateFinContrat());
+		contratDTO.setSpecialite(contrat.getSpecialite());
+		contratDTO.setArchive(contrat.isArchive());
+		contratDTO.setMontantContrat(contrat.getMontantContrat());
+
+
+		return contratDTO;
+	}
+
+
+
+	@GetMapping("/retrieve-all-contrats")
+	public List<Contrat> getContrats() {
+		return contratService.retrieveAllContrats();
+
+	}
 	@GetMapping("/retrieve-contrat/{contrat-id}")
 	public Contrat retrieveContrat(@PathVariable("contrat-id") Integer contratId) {
 		return contratService.retrieveContrat(contratId);
 	}
 
-	@PostMapping("/add-contrat")
-	public Contrat addContrat(@RequestBody Contrat c) {
-    	return contratService.addContrat(c);
-	}
 
 
 	@DeleteMapping("/remove-contrat/{contrat-id}")
@@ -37,11 +71,14 @@ public List<Contrat> getContrats() {
 		contratService.removeContrat(contratId);
 	}
 
-	@PutMapping("/update-contrat")
-	public Contrat updateContrat(@RequestBody Contrat c) {
-    	return contratService.updateContrat(c);
-	}
 
+
+
+	@PutMapping("/update-contrat")
+	public ContratDTO updateContrat(@RequestBody ContratDTO contratDTO) {
+		Contrat updatedContrat = contratService.updateContrat(contratDTO);
+		return convertToContratDTO(updatedContrat);
+	}
 
 
 	@PutMapping(value = "/assignContratToEtudiant/{idContrat}/{nomE}/{prenomE}")
@@ -49,7 +86,6 @@ public List<Contrat> getContrats() {
 		return 	(contratService.affectContratToEtudiant(idContrat, nomE, prenomE));
 	}
 
-	//The most common ISO Date Format yyyy-MM-dd — for example, "2000-10-31".
 		@GetMapping(value = "/getnbContratsValides/{startDate}/{endDate}")
 		public Integer getnbContratsValides(@PathVariable(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
 										  @PathVariable(name = "endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
@@ -64,7 +100,6 @@ public List<Contrat> getContrats() {
 
 	}
 
-	//public float getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate)
 
 	@GetMapping("/calculChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
 	@ResponseBody
@@ -74,5 +109,4 @@ public List<Contrat> getContrats() {
 		return contratService.getChiffreAffaireEntreDeuxDates(startDate, endDate);
 	}
 }
-
 

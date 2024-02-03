@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.kaddem.dto.ContratDTO;
 import tn.esprit.spring.kaddem.entities.Contrat;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.entities.Specialite;
@@ -22,7 +23,12 @@ ContratRepository contratRepository;
 @Autowired
 	EtudiantRepository etudiantRepository;
 	public List<Contrat> retrieveAllContrats(){
-		return contratRepository.findAll();
+		return  contratRepository.findAll();
+	}
+
+	@Override
+	public Contrat updateContrat(ContratDTO ce) {
+		return null;
 	}
 
 	public Contrat updateContrat (Contrat  ce){
@@ -51,7 +57,7 @@ ContratRepository contratRepository;
 		Integer nbContratssActifs=0;
 		if (!contrats.isEmpty()) {
 			for (Contrat contrat : contrats) {
-				if (contrat.getArchive() != null && !contrat.getArchive()) {
+				if (((!contrat.isArchive()) &&contrat.isArchive()))  {
 					nbContratssActifs++;
 				}
 			}
@@ -71,24 +77,23 @@ ContratRepository contratRepository;
 		List<Contrat>contratsAarchiver=null;
 		for (Contrat contrat : contrats) {
 			Date dateSysteme = new Date();
-			if (contrat.getArchive() != null && !contrat.getArchive()) {
-    		long differenceInTime = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
-    		long differenceInDays = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
-    		if (differenceInDays == 15) {
-        		contrats15j.add(contrat);
-        		log.info("Contrat : " + contrat);
-    		}
-    		if (differenceInDays == 0) {
-        		contratsAarchiver.add(contrat);
-        		contrat.setArchive(true);
-        		contratRepository.save(contrat);
-    		}
-		}
-
+			if (!contrat.isArchive()) {
+				long differenceInTime = dateSysteme.getTime() - contrat.getDateFinContrat().getTime();
+				long differenceInDays = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
+				if (differenceInDays==15){
+					contrats15j.add(contrat);
+					log.info(" Contrat : " + contrat);
+				}
+				if (differenceInDays==0) {
+					contratsAarchiver.add(contrat);
+					contrat.setArchive(true);
+					contratRepository.save(contrat);
+				}
+			}
 		}
 	}
 	public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate){
-		float differenceInTime = (float)endDate.getTime() - startDate.getTime();
+		float differenceInTime = endDate.getTime() - (float)startDate.getTime();
 		float differenceInDays = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
 		float differenceInmonths =differenceInDays/30;
         List<Contrat> contrats=contratRepository.findAll();
@@ -110,7 +115,4 @@ ContratRepository contratRepository;
 		return chiffreAffaireEntreDeuxDates;
 
 
-	}
-
-
-}
+	}}
