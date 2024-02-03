@@ -45,7 +45,7 @@ public class ContratRestController {
 		contratDTO.setDateDebutContrat(contrat.getDateDebutContrat());
 		contratDTO.setDateFinContrat(contrat.getDateFinContrat());
 		contratDTO.setSpecialite(contrat.getSpecialite());
-		contratDTO.setArchive(contrat.isArchive());
+		contratDTO.setArchive(contrat.getArchive());
 		contratDTO.setMontantContrat(contrat.getMontantContrat());
 
 
