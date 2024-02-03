@@ -16,9 +16,7 @@ public class UniversiteServiceImpl implements IUniversiteService{
     UniversiteRepository universiteRepository;
 @Autowired
     DepartementRepository departementRepository;
-    public UniversiteServiceImpl() {
-
-    }
+    
   public   List<Universite> retrieveAllUniversites(){
 return (List<Universite>) universiteRepository.findAll();
     }
