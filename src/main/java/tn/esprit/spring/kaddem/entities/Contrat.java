@@ -93,5 +93,9 @@ public class Contrat implements Serializable{
         this.etudiant = etudiant;
     }
 
+     public boolean isArchive() {
+        return archive;
+    }
+
 
 }
