@@ -71,4 +71,32 @@ private void upgradeEquipe(Equipe equipe) {
 		}
 		return false;
 	}
+
+	private int countActiveContracts(List<Etudiant> etudiants) {
+    int nbEtudiantsAvecContratsActifs = 0;
+
+    for (Etudiant etudiant : etudiants) {
+        Set<Contrat> contrats = etudiant.getContrats();
+
+        for (Contrat contrat : contrats) {
+            Boolean archiveStatus = contrat.getArchive();
+            if (archiveStatus != null && !archiveStatus && isContractActiveForYears(contrat, 1)) {
+                nbEtudiantsAvecContratsActifs++;
+                break;
+            }
+        }
+        if (nbEtudiantsAvecContratsActifs >= 3) {
+            break;
+        }
+    }
+
+    return nbEtudiantsAvecContratsActifs;
+}
+private boolean isContractActiveForYears(Contrat contrat, int years) {
+		Date currentDate = new Date();
+		long timeDifference = currentDate.getTime() - contrat.getDateFinContrat().getTime();
+		long yearsDifference = timeDifference / (1000L * 60 * 60 * 24 * 365);
+
+		return yearsDifference > years;
+	}
 }
