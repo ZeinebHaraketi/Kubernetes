@@ -15,7 +15,6 @@ public class Equipe implements Serializable{
     private String nomEquipe;
     @Enumerated(EnumType.STRING)
     private Niveau niveau;
-
     @ManyToMany(cascade =CascadeType.ALL)
 
     @JsonIgnore
@@ -24,7 +23,7 @@ public class Equipe implements Serializable{
     private DetailEquipe detailEquipe;
 
     public Equipe() {
-        
+        super();
     }
 
     public Equipe(String nomEquipe) {

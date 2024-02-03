@@ -1,24 +1,20 @@
 package tn.esprit.spring.kaddem.dto;
 
 import tn.esprit.spring.kaddem.entities.Niveau;
-import lombok.*;
 
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class EquipeDTO {
     private Integer idEquipe;
     private String nomEquipe;
     private Niveau niveau;
 
-     public EquipeDTO(Integer idEquipe, String nomEquipe, Niveau niveau) {
+    public EquipeDTO() {super();
+    }
+
+    public EquipeDTO(Integer idEquipe, String nomEquipe, Niveau niveau) {
         this.idEquipe = idEquipe;
         this.nomEquipe = nomEquipe;
         this.niveau = niveau;
     }
-
     public Integer getIdEquipe() {
         return idEquipe;
     }
@@ -35,11 +31,12 @@ public class EquipeDTO {
         this.nomEquipe = nomEquipe;
     }
 
-     public String getNiveau() {
+    public Niveau getNiveau() {
         return niveau;
     }
 
     public void setNiveau(Niveau niveau) {
         this.niveau = niveau;
     }
+
 }
