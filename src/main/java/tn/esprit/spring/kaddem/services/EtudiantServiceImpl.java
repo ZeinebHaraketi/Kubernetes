@@ -16,6 +16,8 @@ import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+
 
 
 @Service
@@ -41,8 +43,14 @@ public class EtudiantServiceImpl implements IEtudiantService{
 		return etudiantRepository.save(e);
 	}
 
-	public Etudiant retrieveEtudiant(Integer  idEtudiant){
-		return etudiantRepository.findById(idEtudiant).get();
+	public Etudiant retrieveEtudiant(Integer idEtudiant) {
+		Optional<Etudiant> etudiantOptional = etudiantRepository.findById(idEtudiant);
+
+		if (etudiantOptional.isPresent()) {
+			return etudiantOptional.get();
+		} else {
+			return null; 
+		}
 	}
 
 	public void removeEtudiant(Integer idEtudiant){
@@ -50,19 +58,32 @@ public class EtudiantServiceImpl implements IEtudiantService{
 	etudiantRepository.delete(e);
 	}
 
-	public void assignEtudiantToDepartement (Integer etudiantId, Integer departementId){
-        Etudiant etudiant = etudiantRepository.findById(etudiantId).orElse(null);
-        Departement departement = departementRepository.findById(departementId).orElse(null);
-        etudiant.setDepartement(departement);
-        etudiantRepository.save(etudiant);
+	public void assignEtudiantToDepartement(Integer etudiantId, Integer departementId) {
+		Optional<Etudiant> etudiantOptional = etudiantRepository.findById(etudiantId);
+		Optional<Departement> departementOptional = departementRepository.findById(departementId);
+
+		if (etudiantOptional.isPresent() && departementOptional.isPresent()) {
+			Etudiant etudiant = etudiantOptional.get();
+			Departement departement = departementOptional.get();
+			etudiant.setDepartement(departement);
+			etudiantRepository.save(etudiant);
+		} else {
+			// For example, you can log an error message or notify the user.
+		}
 	}
+
 	@Transactional
-	public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe){
-		Contrat c=contratRepository.findById(idContrat).orElse(null);
-		Equipe eq=equipeRepository.findById(idEquipe).orElse(null);
-		c.setEtudiant(e);
-		eq.getEtudiants().add(e);
-return e;
+	public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe) {
+		Contrat c = contratRepository.findById(idContrat).orElse(null);
+		Equipe eq = equipeRepository.findById(idEquipe).orElse(null);
+
+		if (c != null && eq != null) {
+			c.setEtudiant(e);
+			eq.getEtudiants().add(e);
+			return e;
+		} else {
+			return null; // Or return some other value indicating failure.
+		}
 	}
 
 	public 	List<Etudiant> getEtudiantsByDepartement (Integer idDepartement){

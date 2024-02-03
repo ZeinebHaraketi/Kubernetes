@@ -13,6 +13,8 @@ import tn.esprit.spring.kaddem.repositories.EquipeRepository;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.Optional;
+
 
 @Slf4j
 @AllArgsConstructor
@@ -33,8 +35,14 @@ public class EquipeServiceImpl implements IEquipeService{
 		equipeRepository.delete(e);
 	}
 
-	public Equipe retrieveEquipe(Integer equipeId){
-		return equipeRepository.findById(equipeId).get();
+	public Equipe retrieveEquipe(Integer equipeId) {
+		Optional<Equipe> equipeOptional = equipeRepository.findById(equipeId);
+
+		if (equipeOptional.isPresent()) {
+			return equipeOptional.get();
+		} else {
+			return null; 
+		}
 	}
 
 	public Equipe updateEquipe(Equipe e){
