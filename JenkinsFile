@@ -1,7 +1,5 @@
 pipeline{
-    agent{
-        label "node"
-    }
+    agent any 
     stages{
        stage('Cleaning up Workspace') {
             steps {
@@ -12,6 +10,18 @@ pipeline{
         stage('Cloning Git') {
             steps {
                 git branch: 'main', url: 'https://github.com/ZeinebHaraketi/Kubernetes.git'
+            }
+        }
+
+        stage('Build App') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+         stage('Test App') {
+            steps {
+                sh 'mvn test '
             }
         }
     }
