@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import tn.esprit.spring.kaddem.dto.EtudiantDTO;
+import javax.persistence.EntityNotFoundException;
 
 
 
