@@ -109,8 +109,8 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
 	private Etudiant convertToEntity(EtudiantDTO etudiantDTO) {
         Etudiant etudiant = new Etudiant();
-        etudiant.setNom(etudiantDTO.getNom());
-        etudiant.setPrenom(etudiantDTO.getPrenom());
+        etudiant.setNomE(etudiantDTO.getNomE());
+        etudiant.setPrenomE(etudiantDTO.getPrenomE());
 		etudiantToUpdate.setOp(etudiantDTO.getOp());
 
         // Autres conversions de champs
