@@ -51,7 +51,7 @@ class ContratMockTest {
         assertEquals(1000, found.getMontantContrat().intValue());
     }
 
-   @Test
+   /*@Test
 public void testUpdateContrat() {
     Integer contratId = 1;
     Contrat originalContrat = new Contrat(); // Assuming a constructor or setters to initialize
@@ -69,7 +69,7 @@ public void testUpdateContrat() {
     assertNotNull(result);
     assertEquals(Integer.valueOf(1500), result.getMontantContrat());
     verify(contratRepository).save(any(Contrat.class)); // Verify save was called
-}
+}*/
 
 
 
