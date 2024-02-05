@@ -25,6 +25,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import org.mockito.junit.MockitoJUnitRunner;
+
 
 @SpringBootTest
 @Configuration
