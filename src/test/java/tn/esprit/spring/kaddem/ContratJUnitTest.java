@@ -55,7 +55,7 @@ import static org.mockito.Mockito.when;
         assertEquals(contratToAdd.getDateDebutContrat(), addedContrat.getDateDebutContrat());
         assertEquals(contratToAdd.getDateFinContrat(), addedContrat.getDateFinContrat());
         assertEquals(contratToAdd.getSpecialite(), addedContrat.getSpecialite());
-        assertEquals(contratToAdd.isArchive(), addedContrat.isArchive());
+        assertEquals(contratToAdd.getArchive(), addedContrat.getArchive());
         assertEquals(contratToAdd.getMontantContrat(), addedContrat.getMontantContrat());
     }
     @Test
