@@ -53,7 +53,7 @@ class ContratServiceImplIntegrationTest {
         assertEquals(dateDebutContrat, instance.getDateDebutContrat());
         assertEquals(dateFinContrat, instance.getDateFinContrat());
         assertEquals(specialite, instance.getSpecialite());
-        assertEquals(archive, instance.isArchive());
+        assertEquals(archive, instance.getArchive());
         assertEquals(montantContrat, instance.getMontantContrat());
     }
     @Test
@@ -73,7 +73,7 @@ class ContratServiceImplIntegrationTest {
         assertEquals(contratToAdd.getDateDebutContrat(), addedContrat.getDateDebutContrat());
         assertEquals(contratToAdd.getDateFinContrat(), addedContrat.getDateFinContrat());
         assertEquals(contratToAdd.getSpecialite(), addedContrat.getSpecialite());
-        assertEquals(contratToAdd.isArchive(), addedContrat.isArchive());
+        assertEquals(contratToAdd.getArchive(), addedContrat.getArchive());
         assertEquals(contratToAdd.getMontantContrat(), addedContrat.getMontantContrat());
     }
 
