@@ -33,7 +33,7 @@ class ContratMockTest {
         contrat = new Contrat(dateDebut, dateFin, Specialite.IA, false, 1000);
     }
     @Test
-    public void testCreateContrat() {
+     void testCreateContrat() {
         when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
 
         Contrat created = contratService.addContrat(contrat);
@@ -42,7 +42,7 @@ class ContratMockTest {
         assertEquals(Specialite.IA, created.getSpecialite());
     }
     @Test
-    public void testGetContratById() {
+     void testGetContratById() {
         when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
 
         Contrat found = contratService.retrieveContrat(1);
@@ -74,7 +74,7 @@ public void testUpdateContrat() {
 
 
   @Test
-public void testDeleteContrat() {
+ void testDeleteContrat() {
     Integer contratId = 1;
     Contrat contratD = new Contrat();
     contratD.setIdContrat(contratId); // Ensure the contract has an ID.

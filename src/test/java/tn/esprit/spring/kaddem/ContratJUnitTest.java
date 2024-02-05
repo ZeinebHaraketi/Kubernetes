@@ -21,7 +21,7 @@ import java.util.Date;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class ContratJUnitTest {
+ class ContratJUnitTest {
 
     @Autowired
     private ContratRepository contratRepository;
@@ -37,7 +37,7 @@ public class ContratJUnitTest {
     }
 
     @Test
-    public void saveContrat() {
+     void saveContrat() {
         Date dateDebut = new Date();
         Date dateFin = new Date();
         Contrat contrat = new Contrat(dateDebut, dateFin, Specialite.IA, false, 1000);
@@ -48,7 +48,7 @@ public class ContratJUnitTest {
     }
 
     @Test
-    public void findContratById() {
+     void findContratById() {
         Date dateDebut = new Date();
         Date dateFin = new Date();
         Contrat contrat = new Contrat(dateDebut, dateFin, Specialite.IA, false, 1000);
@@ -61,7 +61,7 @@ public class ContratJUnitTest {
     }
 
     @Test
-    public void updateContrat() {
+     void updateContrat() {
         Date dateDebut = new Date();
         Date dateFin = new Date();
         Contrat contrat = new Contrat(dateDebut, dateFin, Specialite.IA, false, 1000);
@@ -76,7 +76,7 @@ public class ContratJUnitTest {
     }
 
     @Test
-    public void deleteContrat() {
+     void deleteContrat() {
         Date dateDebut = new Date();
         Date dateFin = new Date();
         Contrat contrat = new Contrat(dateDebut, dateFin, Specialite.IA, false, 1000);
