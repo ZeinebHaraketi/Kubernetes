@@ -52,27 +52,33 @@ class ContratMockTest {
     }
 
     @Test
-    public void testUpdateContrat() {
-        when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
-        when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
+public void testUpdateContrat() {
+    Integer contratId = 1;
+    Contrat contratToUpdate = new Contrat();
+    contratToUpdate.setIdContrat(contratId);
+    contratToUpdate.setMontantContrat(1000); // Valeur initiale
 
-        contrat.setMontantContrat(1500);
-        Contrat updated = contratService.updateContrat(contrat);
+    when(contratRepository.findById(contratId)).thenReturn(Optional.of(contratToUpdate));
+    when(contratRepository.save(contratToUpdate)).thenReturn(contratToUpdate); // Simulez le comportement de sauvegarde
 
-        assertNotNull(updated);
-        assertEquals(1500, updated.getMontantContrat().intValue());
-    }
+    contratToUpdate.setMontantContrat(1500); // Mise à jour du montant
+    Contrat updatedContrat = contratService.updateContrat(contratToUpdate); // Assumez que cette méthode fait ce qu'elle est censée faire.
 
-    @Test
+    assertNotNull(updatedContrat);
+    assertEquals(Integer.valueOf(1500), updatedContrat.getMontantContrat());
+}
+
+
+   @Test
     public void testDeleteContrat() {
-        Integer contratId = 1;
+    Integer contratId = 1;
+    contrat.setIdContrat(contratId); // Assurez-vous que le contrat a un ID pour correspondre au comportement attendu.
 
-        when(contratRepository.findById(contratId)).thenReturn(Optional.of(contrat));
-        doNothing().when(contratRepository).deleteById(contratId);
+    when(contratRepository.findById(contratId)).thenReturn(Optional.of(contrat));
+    contratService.removeContrat(contratId);
 
-        contratService.removeContrat(contratId);
-
-        verify(contratRepository).deleteById(contratId);
+    verify(contratRepository).deleteById(contratId); // Assurez-vous que cette ligne correspond à l'action dans votre service.
     }
-    
+
+
 }
