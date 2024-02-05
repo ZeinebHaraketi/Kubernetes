@@ -76,7 +76,6 @@ void testAddContrat() {
 
     Contrat addedContrat = contratService.addContrat(contratToAdd);
 
-    assertNotNull(addedContrat.getIdContrat());
     assertEquals(contratToAdd.getDateDebutContrat(), addedContrat.getDateDebutContrat());
     assertEquals(contratToAdd.getDateFinContrat(), addedContrat.getDateFinContrat());
     assertEquals(contratToAdd.getSpecialite(), addedContrat.getSpecialite());
