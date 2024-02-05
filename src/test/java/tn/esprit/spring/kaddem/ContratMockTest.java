@@ -57,25 +57,26 @@ class ContratServiceImplIntegrationTest {
         assertEquals(montantContrat, instance.getMontantContrat());
     }
     @Test
-    void testAddContrat() {
-        Contrat contratToAdd = new Contrat();
-        contratToAdd.setDateDebutContrat(new Date());
-        contratToAdd.setDateFinContrat(new Date());
-        contratToAdd.setSpecialite(Specialite.IA);
-        contratToAdd.setArchive(false);
-        contratToAdd.setMontantContrat(1000);
+@BeforeEach
+@Order(1)
+void testAddContrat() {
+    Contrat contratToAdd = new Contrat();
+    contratToAdd.setDateDebutContrat(new Date());
+    contratToAdd.setDateFinContrat(new Date());
+    contratToAdd.setSpecialite(Specialite.IA);
+    contratToAdd.setArchive(false);
+    contratToAdd.setMontantContrat(1000);
 
-        when(contratRepository.save(Mockito.any(Contrat.class))).thenReturn(contratToAdd);
+    Contrat addedContrat = contratService.addContrat(contratToAdd);
 
-        Contrat addedContrat = contratService.addContrat(contratToAdd);
+    assertNotNull(addedContrat.getIdContrat());
+    assertEquals(contratToAdd.getDateDebutContrat(), addedContrat.getDateDebutContrat());
+    assertEquals(contratToAdd.getDateFinContrat(), addedContrat.getDateFinContrat());
+    assertEquals(contratToAdd.getSpecialite(), addedContrat.getSpecialite());
+    assertEquals(contratToAdd.getArchive(), addedContrat.getArchive()); // Correction ici
+    assertEquals(contratToAdd.getMontantContrat(), addedContrat.getMontantContrat());
+}
 
-        assertNull(addedContrat.getIdContrat());
-        assertEquals(contratToAdd.getDateDebutContrat(), addedContrat.getDateDebutContrat());
-        assertEquals(contratToAdd.getDateFinContrat(), addedContrat.getDateFinContrat());
-        assertEquals(contratToAdd.getSpecialite(), addedContrat.getSpecialite());
-        assertEquals(contratToAdd.getArchive(), addedContrat.getArchive());
-        assertEquals(contratToAdd.getMontantContrat(), addedContrat.getMontantContrat());
-    }
 
     @Test
     void testUpdateContrat() {
