@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @Configuration
 
-class ContratServiceImplIntegrationTest {
+class ContratMockTest {
 
     @Mock
     private ContratRepository contratRepository;

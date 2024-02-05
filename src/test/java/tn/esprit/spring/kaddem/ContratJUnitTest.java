@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
 @Configuration
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
- class ContratunistTests {
+ class ContratJUnitTest {
     @Autowired
     private ContratRepository contratRepository;
 
