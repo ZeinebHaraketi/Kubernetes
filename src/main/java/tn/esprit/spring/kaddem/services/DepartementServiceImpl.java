@@ -28,8 +28,10 @@ public class DepartementServiceImpl implements IDepartementService{
         return convertToDto(d);
     }
 
-	public   Departement updateDepartement (Departement d){
-		return departementRepository.save(d);
+    DepartementDTO updateDepartement(DepartementDTO dDTO){
+		Departement d = convertToEntity(dDTO);
+        d = departementRepository.save(d);
+        return convertToDto(d);	
 	}
 
 	public Departement retrieveDepartement(Integer idDepart) {

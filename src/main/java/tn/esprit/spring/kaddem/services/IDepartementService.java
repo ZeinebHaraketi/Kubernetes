@@ -10,7 +10,7 @@ public interface IDepartementService {
     public List<Departement> retrieveAllDepartements();
 
     public DepartementDTO addDepartement(DepartementDTO dDTO);
-    public   Departement updateDepartement (Departement d);
+    public DepartementDTO updateDepartement(DepartementDTO dDTO);
 
     public  Departement retrieveDepartement (Integer idDepart);
 
