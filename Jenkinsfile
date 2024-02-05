@@ -33,7 +33,7 @@ pipeline{
 
                  stage('SonarQube Analysis') {
             steps {
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://172.10.0.140:9000 -Dsonar.login=admin -Dsonar.password=jenkins'
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://172.10.0.140:9000 -Dsonar.login=admin -Dsonar.password=jenkins -Dsonar.java.coveragePlugin=jacoco  -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml'
             }
         }
     }
