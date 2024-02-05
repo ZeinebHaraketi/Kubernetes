@@ -111,7 +111,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
         Etudiant etudiant = new Etudiant();
         etudiant.setNomE(etudiantDTO.getNomE());
         etudiant.setPrenomE(etudiantDTO.getPrenomE());
-		etudiantToUpdate.setOp(etudiantDTO.getOp());
+		etudiant.setOp(etudiantDTO.getOp());
 
         // Autres conversions de champs
         return etudiant;
@@ -123,7 +123,7 @@ public class EtudiantServiceImpl implements IEtudiantService{
         etudiantDTO.setIdEtudiant(etudiant.getIdEtudiant());
         etudiantDTO.setNomE(etudiant.getNomE());
         etudiantDTO.setPrenomE(etudiant.getPrenomE());
-		etudiantToUpdate.setOp(etudiantDTO.getOp());
+		etudiantDTO.setOp(etudiant.getOp());
 
         // Autres conversions de champs
         return etudiantDTO;
