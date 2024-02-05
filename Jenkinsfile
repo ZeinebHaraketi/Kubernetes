@@ -21,13 +21,19 @@ pipeline{
 
          stage('Test App') {
             steps {
-                sh 'mvn test '
+                sh 'mvn test jacoco:report '
             }
         }
 
         stage('Install packages') {
             steps {
                 sh 'mvn install '
+            }
+        }
+
+          stage('Code Coverage') {
+            steps {
+                jacoco()
             }
         }
 
