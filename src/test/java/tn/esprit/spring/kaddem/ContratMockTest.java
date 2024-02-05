@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Configuration
-
+@RunWith(MockitoJUnitRunner.class)
 class ContratMockTest {
 
     @Mock
@@ -66,6 +66,8 @@ void testAddContrat() {
     contratToAdd.setSpecialite(Specialite.IA);
     contratToAdd.setArchive(false);
     contratToAdd.setMontantContrat(1000);
+
+    when(contratRepository.save(any(Contrat.class))).thenReturn(contratToAdd);
 
     Contrat addedContrat = contratService.addContrat(contratToAdd);
 
