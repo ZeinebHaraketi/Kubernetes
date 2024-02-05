@@ -44,13 +44,13 @@ public class DepartementServiceImpl implements IDepartementService{
 
 private Departement convertToEntity(DepartementDTO dDTO) {
     Departement departement = new Departement();
-    departement.setNomDepart(dDTO.getNom());
+    departement.setNomDepart(dDTO.getNomDepart());
     return departement;
 }
 
 private DepartementDTO convertToDto(Departement d) {
     DepartementDTO dDTO = new DepartementDTO();
-    dDTO.setNom(d.getNomDepart());
+    dDTO.setNomDepart(d.getNomDepart());
     return dDTO;
 }
 
