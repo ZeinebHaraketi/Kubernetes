@@ -111,6 +111,8 @@ public class EtudiantServiceImpl implements IEtudiantService{
         Etudiant etudiant = new Etudiant();
         etudiant.setNom(etudiantDTO.getNom());
         etudiant.setPrenom(etudiantDTO.getPrenom());
+		etudiantToUpdate.setOp(etudiantDTO.getOp());
+
         // Autres conversions de champs
         return etudiant;
     }
@@ -118,9 +120,11 @@ public class EtudiantServiceImpl implements IEtudiantService{
     // Méthode de conversion Etudiant -> EtudiantDTO
     private EtudiantDTO convertToDTO(Etudiant etudiant) {
         EtudiantDTO etudiantDTO = new EtudiantDTO();
-        etudiantDTO.setId(etudiant.getId());
-        etudiantDTO.setNom(etudiant.getNom());
-        etudiantDTO.setPrenom(etudiant.getPrenom());
+        etudiantDTO.setIdEtudiant(etudiant.getIdEtudiant());
+        etudiantDTO.setNomE(etudiant.getNomE());
+        etudiantDTO.setPrenomE(etudiant.getPrenomE());
+		etudiantToUpdate.setOp(etudiantDTO.getOp());
+
         // Autres conversions de champs
         return etudiantDTO;
     }
