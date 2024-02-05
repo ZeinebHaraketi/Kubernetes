@@ -37,10 +37,6 @@ public class DepartementRestController {
 		departementService.deleteDepartement(departementId);
 	}
 
-	@PutMapping
-    public DepartementDTO updateDepartement(@RequestBody DepartementDTO departementDTO) {
-        return departementService.updateDepartement(departementDTO);
-    }
 
 
 }
