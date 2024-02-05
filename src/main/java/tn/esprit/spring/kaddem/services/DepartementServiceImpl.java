@@ -8,6 +8,8 @@ import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.repositories.DepartementRepository;
 
 import java.util.List;
+import tn.esprit.spring.kaddem.dto.DepartementDTO;
+
 
 @Slf4j
 
@@ -19,9 +21,12 @@ public class DepartementServiceImpl implements IDepartementService{
 		return (List<Departement>) departementRepository.findAll();
 	}
 
-	public Departement addDepartement (Departement d){
-		return departementRepository.save(d);
-	}
+	@Override
+    public DepartementDTO addDepartement(DepartementDTO dDTO) {
+        Departement d = convertToEntity(dDTO);
+        d = departementRepository.save(d);
+        return convertToDto(d);
+    }
 
 	public   Departement updateDepartement (Departement d){
 		return departementRepository.save(d);
@@ -36,6 +41,18 @@ public class DepartementServiceImpl implements IDepartementService{
 		departementRepository.delete(d);
 	}
 
+
+private Departement convertToEntity(DepartementDTO dDTO) {
+    Departement departement = new Departement();
+    departement.setNomDepart(dDTO.getNom());
+    return departement;
+}
+
+private DepartementDTO convertToDto(Departement d) {
+    DepartementDTO dDTO = new DepartementDTO();
+    dDTO.setNom(d.getNomDepart());
+    return dDTO;
+}
 
 
 }

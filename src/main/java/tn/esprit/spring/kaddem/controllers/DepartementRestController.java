@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.kaddem.entities.Departement;
 import tn.esprit.spring.kaddem.services.IDepartementService;
+import tn.esprit.spring.kaddem.dto.DepartementDTO;
+
 
 import java.util.List;
 
@@ -25,9 +27,9 @@ public class DepartementRestController {
 	}
 
 	@PostMapping("/add-departement")
-	public Departement addDepartement(@RequestBody Departement d) {
-    	return departementService.addDepartement(d);
-	}
+	public DepartementDTO addDepartement(@RequestBody DepartementDTO departementDTO) {
+        return departementService.addDepartement(departementDTO);
+    }
 
 
 	@DeleteMapping("/remove-departement/{departement-id}")
