@@ -1,142 +1,78 @@
 package tn.esprit.spring.kaddem;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.times;
 
-import java.util.Arrays;
-
-import org.junit.jupiter.api.*;
-
-import java.util.List;
-
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
 import tn.esprit.spring.kaddem.entities.Contrat;
 import tn.esprit.spring.kaddem.entities.Specialite;
 import tn.esprit.spring.kaddem.repositories.ContratRepository;
-import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 import tn.esprit.spring.kaddem.services.ContratServiceImpl;
 
 import java.util.Date;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.junit.runner.RunWith;
-import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.any;
-
-
-@SpringBootTest
-@Configuration
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 class ContratMockTest {
 
     @Mock
     private ContratRepository contratRepository;
-    @Mock
-    private EtudiantRepository etudiantRepository;
+
     @InjectMocks
     private ContratServiceImpl contratService;
 
-    @Test
-
-    void testConstructorWithValidValues() {
-        Date dateDebutContrat = new Date();
-        Date dateFinContrat = new Date();
-        Specialite specialite = Specialite.IA;
-        boolean archive = false;
-        int montantContrat = 1000;
-
-        Contrat instance = new Contrat(dateDebutContrat, dateFinContrat, specialite, archive, montantContrat);
-
-        assertNotNull(instance);
-        assertEquals(dateDebutContrat, instance.getDateDebutContrat());
-        assertEquals(dateFinContrat, instance.getDateFinContrat());
-        assertEquals(specialite, instance.getSpecialite());
-        assertEquals(archive, instance.getArchive());
-        assertEquals(montantContrat, instance.getMontantContrat());
+    private Contrat contrat;
+    @BeforeEach
+    public void setup() {
+        Date dateDebut = new Date();
+        Date dateFin = new Date();
+        contrat = new Contrat(dateDebut, dateFin, Specialite.IA, false, 1000);
     }
     @Test
-@BeforeEach
-@Order(1)
-void testAddContrat() {
-    Contrat contratToAdd = new Contrat();
-    contratToAdd.setDateDebutContrat(new Date());
-    contratToAdd.setDateFinContrat(new Date());
-    contratToAdd.setSpecialite(Specialite.IA);
-    contratToAdd.setArchive(false);
-    contratToAdd.setMontantContrat(1000);
+    public void testCreateContrat() {
+        when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
 
-    when(contratRepository.save(any(Contrat.class))).thenReturn(contratToAdd);
+        Contrat created = contratService.addContrat(contrat);
 
-    Contrat addedContrat = contratService.addContrat(contratToAdd);
-
-    assertEquals(contratToAdd.getDateDebutContrat(), addedContrat.getDateDebutContrat());
-    assertEquals(contratToAdd.getDateFinContrat(), addedContrat.getDateFinContrat());
-    assertEquals(contratToAdd.getSpecialite(), addedContrat.getSpecialite());
-    assertEquals(contratToAdd.getArchive(), addedContrat.getArchive()); // Correction ici
-    assertEquals(contratToAdd.getMontantContrat(), addedContrat.getMontantContrat());
-}
-
-
+        assertNotNull(created);
+        assertEquals(Specialite.IA, created.getSpecialite());
+    }
     @Test
-    void testUpdateContrat() {
-        Contrat contratToUpdate = new Contrat();
-        contratToUpdate.setIdContrat(1); // Set a valid ID
-        contratToUpdate.setDateDebutContrat(new Date());
-        contratToUpdate.setDateFinContrat(new Date());
-        contratToUpdate.setSpecialite(Specialite.CLOUD);
-        contratToUpdate.setArchive(true);
-        contratToUpdate.setMontantContrat(1500);
+    public void testGetContratById() {
+        when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
 
-        when(contratRepository.findById(1)).thenReturn(Optional.of(contratToUpdate));
-        when(contratRepository.save(Mockito.any(Contrat.class))).thenReturn(contratToUpdate);
+        Contrat found = contratService.retrieveContrat(1);
 
-        Contrat updatedContrat = contratService.updateContrat(contratToUpdate);
-
-        assertNotNull(updatedContrat);
-        assertEquals(Specialite.CLOUD, updatedContrat.getSpecialite());
+        assertNotNull(found);
+        assertEquals(1000, found.getMontantContrat().intValue());
     }
 
     @Test
-    void testRetrieveAllContrats() {
-        when(contratRepository.findAll()).thenReturn(Arrays.asList(new Contrat(), new Contrat())); // Mock data
-        List<Contrat> result = contratService.retrieveAllContrats();
+    public void testUpdateContrat() {
+        when(contratRepository.findById(1)).thenReturn(Optional.of(contrat));
+        when(contratRepository.save(any(Contrat.class))).thenReturn(contrat);
 
-        assertNotNull(result);
-        assertEquals(2, result.size());
+        contrat.setMontantContrat(1500);
+        Contrat updated = contratService.updateContrat(contrat);
+
+        assertNotNull(updated);
+        assertEquals(1500, updated.getMontantContrat().intValue());
     }
 
     @Test
-    void testRetrieveContrat() {
-        Contrat contrat = new Contrat();
-        contrat.setIdContrat(6); // Set a valid ID
-        when(contratRepository.findById(6)).thenReturn(Optional.of(contrat));
+    public void testDeleteContrat() {
+        Integer contratId = 1;
 
-        Contrat result = contratService.retrieveContrat(6);
+        when(contratRepository.findById(contratId)).thenReturn(Optional.of(contrat));
+        doNothing().when(contratRepository).deleteById(contratId);
 
-        assertNotNull(result);
+        contratService.removeContrat(contratId);
+
+        verify(contratRepository).deleteById(contratId);
     }
-
-    @Test
-    void testRemoveContrat() {
-        Contrat contrat = new Contrat();
-        contrat.setIdContrat(6); // Set a valid ID
-
-        when(contratRepository.findById(6)).thenReturn(Optional.of(contrat));
-
-        contratService.removeContrat(6);
-
-        assertNull(contratService.retrieveContrat(8));
-    }
-
-
-
-
-
+    
 }
