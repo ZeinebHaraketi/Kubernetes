@@ -47,11 +47,12 @@ public class EtudiantRestController {
 	public void affecterEtudiantToDepartement(@PathVariable("etudiantId") Integer etudiantId, @PathVariable("departementId")Integer departementId){
 		etudiantService.assignEtudiantToDepartement(etudiantId, departementId);
     }
-   @PostMapping("/add-assign-Etudiant/{idContrat}/{idEquipe}")
-@ResponseBody
-public Etudiant addEtudiantWithEquipeAndContract(@RequestBody Etudiant e, @PathVariable("idContrat") Integer idContrat, @PathVariable("idEquipe") Integer idEquipe) {
-    return etudiantService.addAndAssignEtudiantToEquipeAndContract(e, idContrat, idEquipe);
-}
+	
+//    @PostMapping("/add-assign-Etudiant/{idContrat}/{idEquipe}")
+// @ResponseBody
+// public Etudiant addEtudiantWithEquipeAndContract(@RequestBody Etudiant e, @PathVariable("idContrat") Integer idContrat, @PathVariable("idEquipe") Integer idEquipe) {
+//     return etudiantService.addAndAssignEtudiantToEquipeAndContract(e, idContrat, idEquipe);
+// }
 
 
 	@GetMapping(value = "/getEtudiantsByDepartement/{idDepartement}")
