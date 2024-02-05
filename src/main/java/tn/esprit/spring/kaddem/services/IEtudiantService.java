@@ -4,12 +4,15 @@ import tn.esprit.spring.kaddem.entities.Etudiant;
 
 import java.util.List;
 
+import tn.esprit.spring.kaddem.dto.EtudiantDTO;
+
+
 public interface IEtudiantService {
     public List<Etudiant> retrieveAllEtudiants();
 
-    public Etudiant addEtudiant (Etudiant e);
+    public EtudiantDTO addEtudiant(EtudiantDTO etudiantDTO);
 
-    public Etudiant updateEtudiant (Etudiant e);
+    public EtudiantDTO updateEtudiant(EtudiantDTO etudiantDTO);
 
     public Etudiant retrieveEtudiant(Integer  idEtudiant);
 

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.kaddem.entities.Etudiant;
 import tn.esprit.spring.kaddem.services.IEtudiantService;
+import tn.esprit.spring.kaddem.dto.EtudiantDTO;
+
 
 import java.util.List;
 
@@ -25,9 +27,9 @@ public class EtudiantRestController {
 	}
 
 	@PostMapping("/add-etudiant")
-	public Etudiant addEtudiant(@RequestBody Etudiant e) {
-		return etudiantService.addEtudiant(e);
-	}
+	 public EtudiantDTO addEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
+        return etudiantService.addEtudiant(etudiantDTO);
+    }
 
 	@DeleteMapping("/remove-etudiant/{etudiant-id}")
 	public void removeEtudiant(@PathVariable("etudiant-id") Integer etudiantId) {
@@ -36,8 +38,8 @@ public class EtudiantRestController {
 
 	// http://localhost:8089/Kaddem/etudiant/update-etudiant
 	@PutMapping("/update-etudiant")
-	public Etudiant updateEtudiant(@RequestBody Etudiant e) {
-		return etudiantService.updateEtudiant(e);
+	public EtudiantDTO updateEtudiant(@RequestBody EtudiantDTO etudiantDTO) {
+		return etudiantService.updateEtudiant(etudiantDTO);
 
 	}
 

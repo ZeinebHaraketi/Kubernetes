@@ -17,6 +17,7 @@ import tn.esprit.spring.kaddem.repositories.EtudiantRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import tn.esprit.spring.kaddem.dto.EtudiantDTO;
 
 
 
@@ -35,13 +36,29 @@ public class EtudiantServiceImpl implements IEtudiantService{
 	return (List<Etudiant>) etudiantRepository.findAll();
 	}
 
-	public Etudiant addEtudiant (Etudiant e){
-		return etudiantRepository.save(e);
+	public EtudiantDTO addEtudiant(EtudiantDTO etudiantDTO){
+        Etudiant etudiant = convertToEntity(etudiantDTO);
+        etudiant = etudiantRepository.save(etudiant);
+        return convertToDTO(etudiant);
 	}
 
-	public Etudiant updateEtudiant (Etudiant e){
-		return etudiantRepository.save(e);
-	}
+	public EtudiantDTO updateEtudiant(EtudiantDTO etudiantDTO) {
+        // Assurez-vous que l'étudiant existe avant de tenter de le mettre à jour
+        Etudiant etudiantToUpdate = etudiantRepository.findById(etudiantDTO.getIdEtudiant())
+                .orElseThrow(() -> new EntityNotFoundException("Etudiant not found with ID: " + etudiantDTO.getIdEtudiant()));
+
+        // Mise à jour des champs de l'entité
+        etudiantToUpdate.setNomE(etudiantDTO.getNomE());
+        etudiantToUpdate.setPrenomE(etudiantDTO.getPrenomE());
+		etudiantToUpdate.setOp(etudiantDTO.getOp());
+
+        // Ajoutez ici la mise à jour des autres champs selon besoin
+
+        Etudiant updatedEtudiant = etudiantRepository.save(etudiantToUpdate);
+
+        // Convertir en DTO pour le retour
+        return convertToDTO(updatedEtudiant);
+    }
 
 	public Etudiant retrieveEtudiant(Integer idEtudiant) {
 		Optional<Etudiant> etudiantOptional = etudiantRepository.findById(idEtudiant);
@@ -87,6 +104,25 @@ public class EtudiantServiceImpl implements IEtudiantService{
 	}
 
 	public 	List<Etudiant> getEtudiantsByDepartement (Integer idDepartement){
-return  etudiantRepository.findEtudiantsByDepartementIdDepart((idDepartement));
+		return  etudiantRepository.findEtudiantsByDepartementIdDepart((idDepartement));
 	}
+
+	private Etudiant convertToEntity(EtudiantDTO etudiantDTO) {
+        Etudiant etudiant = new Etudiant();
+        etudiant.setNom(etudiantDTO.getNom());
+        etudiant.setPrenom(etudiantDTO.getPrenom());
+        // Autres conversions de champs
+        return etudiant;
+    }
+
+    // Méthode de conversion Etudiant -> EtudiantDTO
+    private EtudiantDTO convertToDTO(Etudiant etudiant) {
+        EtudiantDTO etudiantDTO = new EtudiantDTO();
+        etudiantDTO.setId(etudiant.getId());
+        etudiantDTO.setNom(etudiant.getNom());
+        etudiantDTO.setPrenom(etudiant.getPrenom());
+        // Autres conversions de champs
+        return etudiantDTO;
+    }
+
 }
