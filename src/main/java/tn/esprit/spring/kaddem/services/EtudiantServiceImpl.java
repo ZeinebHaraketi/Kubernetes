@@ -37,6 +37,10 @@ public class EtudiantServiceImpl implements IEtudiantService{
 	return (List<Etudiant>) etudiantRepository.findAll();
 	}
 
+	public Etudiant addEtudiant (Etudiant e){
+		return etudiantRepository.save(e);
+	}
+
 	public EtudiantDTO addEtudiant(EtudiantDTO etudiantDTO){
         Etudiant etudiant = convertToEntity(etudiantDTO);
         etudiant = etudiantRepository.save(etudiant);

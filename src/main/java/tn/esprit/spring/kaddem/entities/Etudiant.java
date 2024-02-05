@@ -56,6 +56,12 @@ public class Etudiant implements Serializable{
         this.op = op;
     }
 
+      public Etudiant(int id, String nomE, String prenomE) {
+        this.idEtudiant = id;
+         this.nomE = nomE;
+        this.prenomE = prenomE;
+}
+
     public Set<Contrat> getContrats() {
         return contrats;
     }
