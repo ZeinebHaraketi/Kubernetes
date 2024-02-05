@@ -27,9 +27,10 @@ public class DepartementServiceImpl implements IDepartementService{
 		return departementRepository.save(d);
 	}
 
-	public  Departement retrieveDepartement (Integer idDepart){
-		return departementRepository.findById(idDepart).get();
+	public Departement retrieveDepartement(Integer idDepart) {
+    return departementRepository.findById(idDepart).orElse(null);
 	}
+
 	public  void deleteDepartement(Integer idDepartement){
 		Departement d=retrieveDepartement(idDepartement);
 		departementRepository.delete(d);
