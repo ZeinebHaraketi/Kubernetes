@@ -69,16 +69,19 @@ public void testUpdateContrat() {
 }
 
 
-   @Test
-    public void testDeleteContrat() {
+  @Test
+public void testDeleteContrat() {
     Integer contratId = 1;
-    contrat.setIdContrat(contratId); // Assurez-vous que le contrat a un ID pour correspondre au comportement attendu.
+    Contrat contratD = new Contrat();
+    contratD.setIdContrat(contratId); // Ensure the contract has an ID.
 
-    when(contratRepository.findById(contratId)).thenReturn(Optional.of(contrat));
+    when(contratRepository.findById(contratId)).thenReturn(Optional.of(contratD));
+
     contratService.removeContrat(contratId);
 
-    verify(contratRepository).deleteById(contratId); // Assurez-vous que cette ligne correspond à l'action dans votre service.
-    }
+    verify(contratRepository).delete(contratD); // Adjust this line to match your service's actual behavior.
+}
+
 
 
 }
